@@ -138,6 +138,12 @@
             app:layout_constraintBottom_toBottomOf="@+id/countryLocationLabel"
             style="@style/TextAppearance.AppCompat.Caption"
             />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="drawable"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

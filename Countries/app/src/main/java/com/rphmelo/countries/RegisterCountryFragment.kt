@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.rphmelo.countries.database.AppDatabase
 import com.rphmelo.countries.database.CountryInfo
 import com.rphmelo.countries.databinding.FragmentRegisterCountryBinding
@@ -52,6 +53,7 @@ class RegisterCountryFragment : Fragment() {
                 capital = textInputEditTextCountryCapital.text.toString(),
             )
             appDb?.countryInfoDao()?.insert(countryInfo)
+            showRegisterMessage(countryInfo.name)
             clearForm()
         }
     }
@@ -63,6 +65,12 @@ class RegisterCountryFragment : Fragment() {
             textInputEditTextCountryCurrency.text?.clear()
             textInputEditTextCountryLocation.text?.clear()
             textInputEditTextCountryCapital.text?.clear()
+        }
+    }
+
+    private fun showRegisterMessage(countryName: String) {
+        binding?.buttonBackToCountries?.let {
+            Snackbar.make(it, getString(R.string.register_country_success_registered_message, countryName), Snackbar.LENGTH_SHORT).show()
         }
     }
 
