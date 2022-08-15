@@ -24,8 +24,10 @@ class CountryItemAdapter : RecyclerView.Adapter<CountryItemAdapter.CharacterItem
     }
 
     fun setData(list: List<CountryInfo>) {
-        countryList.clear()
-        countryList.addAll(list)
+        with(countryList) {
+            clear()
+            addAll(list)
+        }
         notifyDataSetChanged()
     }
 

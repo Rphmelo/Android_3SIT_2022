@@ -13,10 +13,4 @@ interface CountryInfoDAO {
 
     @Insert
     fun insert(vararg countryInfo: CountryInfo)
-
-    @Update
-    fun update(countryInfo: CountryInfo)
-
-    @Delete
-    fun delete(countryInfo: CountryInfo)
 }
