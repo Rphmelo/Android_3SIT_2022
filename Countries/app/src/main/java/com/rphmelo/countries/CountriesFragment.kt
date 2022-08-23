@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.rphmelo.countries.RegisterCountryFragment.Companion.COUNTRY_INFO_BUNDLE_KEY
 import com.rphmelo.countries.database.AppDatabase
 import com.rphmelo.countries.database.CountryInfo
 import com.rphmelo.countries.databinding.FragmentCountriesBinding
@@ -24,6 +25,10 @@ class CountriesFragment : Fragment() {
         view?.context?.let {
             AppDatabase.getDatabase(it)
         }
+    }
+
+    private val countryInfoArgument by lazy {
+        arguments?.getParcelable(COUNTRY_INFO_BUNDLE_KEY) as? CountryInfo
     }
 
     override fun onCreateView(
@@ -68,12 +73,44 @@ class CountriesFragment : Fragment() {
                 .setTitle(getString(R.string.delete_dialog_title))
                 .setMessage(getString(R.string.delete_dialog_message, countryInfo.name))
                 .setNeutralButton(getString(R.string.delete_cancel_label)) { dialog, _ ->
-
+                    dialog.cancel()
                 }
+                .setPositiveButton(getString(R.string.delete_continue_label)) { dialog, _ ->
+                    deleteCountry(countryInfo)
+                    dialog.dismiss()
+                }
+                .show()
         }
     }
 
     private fun updateCountry(countryInfo: CountryInfo) {
+        findNavController().navigate(
+            R.id.action_to_RegisterCountryFragment,
+            RegisterCountryFragment.buildBundle(countryInfo)
+        )
+    }
 
+    private fun deleteCountry(countryInfo: CountryInfo) {
+        appDb?.countryInfoDao()?.delete(countryInfo)
+
+        binding?.recyclerViewCountries?.let {
+            SnackBarUtil.showSnackBar(it, getString(R.string.delete_dialog_message, countryInfo.name))
+        }
+        getDataFromDatabase()
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
