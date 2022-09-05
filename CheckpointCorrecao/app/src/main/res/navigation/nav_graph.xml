@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/student_list_fragment"
+    >
+
+    <fragment
+        android:id="@+id/register_student_fragment"
+        android:name="br.com.fiap.checkpointcorrecao.RegisterStudentFragment"
+        android:label="Registrar Alunos"
+        />
+
+    <fragment
+        android:id="@+id/student_list_fragment"
+        android:name="br.com.fiap.checkpointcorrecao.StudentListFragment"
+        android:label="Listar Alunos"
+        >
+        <action
+            android:id="@+id/action_to_register_student"
+            app:destination="@id/register_student_fragment"/>
+    </fragment>
+
+</navigation>

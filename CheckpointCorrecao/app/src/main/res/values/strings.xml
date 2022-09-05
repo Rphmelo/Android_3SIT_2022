@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CheckpointCorrecao</string>
+    <string name="register_student_button_label">Cadastrar Aluno</string>
+    <string name="back_to_student_list_button_label">Voltar para Lista</string>
+    <string name="student_name_label">Nome</string>
+    <string name="student_rm_label">RM</string>
+    <string name="student_grade_label">Turma</string>
 </resources>
