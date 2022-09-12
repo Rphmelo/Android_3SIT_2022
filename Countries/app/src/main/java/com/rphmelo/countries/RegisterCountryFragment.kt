@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.rphmelo.countries.database.AppDatabase
 import com.rphmelo.countries.database.CountryInfo
 import com.rphmelo.countries.databinding.FragmentRegisterCountryBinding
@@ -18,6 +19,9 @@ class RegisterCountryFragment : Fragment() {
         view?.context?.let {
             AppDatabase.getDatabase(it)
         }
+    }
+    private val countryInfoArgument by lazy {
+        arguments?.getParcelable(COUNTRY_INFO_BUNDLE_KEY) as? CountryInfo
     }
 
     override fun onCreateView(
@@ -33,17 +37,40 @@ class RegisterCountryFragment : Fragment() {
         setupViews()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     private fun setupViews() {
         binding?.buttonBackToCountries?.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        binding?.registerCountryButton?.setOnClickListener {
-            insertData()
+        binding?.registerUpdateCountryButton?.run {
+            text = if(countryInfoArgument == null) {
+                getString(R.string.register_country_button_label)
+            } else {
+                getString(R.string.update_country_button_label)
+            }
+
+            setOnClickListener {
+                insertUpdateData()
+            }
+        }
+
+        countryInfoArgument?.let { countryInfoArgument ->
+            binding?.run {
+                textInputEditTextCountryName.setText(countryInfoArgument.name)
+                textInputEditTextCountryLanguage.setText(countryInfoArgument.language)
+                textInputEditTextCountryCurrency.setText(countryInfoArgument.currency)
+                textInputEditTextCountryLocation.setText(countryInfoArgument.location)
+                textInputEditTextCountryCapital.setText(countryInfoArgument.capital)
+            }
         }
     }
 
-    private fun insertData() {
+    private fun insertUpdateData() {
         binding?.run {
             val countryInfo = CountryInfo(
                 name = textInputEditTextCountryName.text.toString(),
@@ -52,8 +79,22 @@ class RegisterCountryFragment : Fragment() {
                 location = textInputEditTextCountryLocation.text.toString(),
                 capital = textInputEditTextCountryCapital.text.toString(),
             )
-            appDb?.countryInfoDao()?.insert(countryInfo)
-            clearForm()
+
+            countryInfoArgument?.let {
+                countryInfo.id = it.id
+            }
+
+            appDb?.countryInfoDao()?.run {
+                val snackBarMessageResId: Int = if(countryInfoArgument == null) {
+                    insert(countryInfo)
+                    R.string.register_country_success_registered_message
+                } else {
+                    update(countryInfo)
+                    R.string.register_country_success_updated_message
+                }
+                clearForm()
+                showRegisterMessage(getString(snackBarMessageResId, countryInfo.name))
+            }
         }
     }
 
@@ -67,9 +108,10 @@ class RegisterCountryFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+    private fun showRegisterMessage(message: String) {
+        binding?.buttonBackToCountries?.let {
+            SnackBarUtil.showSnackBar(it, message)
+        }
     }
 
     companion object {
@@ -77,7 +119,7 @@ class RegisterCountryFragment : Fragment() {
 
         fun buildBundle(countryInfo: CountryInfo?): Bundle? {
             return countryInfo?.let {
-                bundleOf(COUNTRY_INFO_BUNDLE_KEY to countryInfo)
+                bundleOf(COUNTRY_INFO_BUNDLE_KEY to it)
             }
         }
     }
