@@ -29,10 +29,18 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
-
+    def lifecycle_version = "2.5.1"
+    def coroutine_version = "1.6.1"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version")
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'

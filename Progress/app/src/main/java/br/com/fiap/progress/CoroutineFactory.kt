@@ -30,23 +30,14 @@ object CoroutineFactory {
         }.await()
     }
 
-    suspend fun getFibonacci() {
-        return withContext(Dispatchers.Default) {
-            fibonacci(100)
-        }
-    }
-
     //Função que vai bloquear a Main Thread
-    private suspend fun fibonacci(x: Int): Int {
-        delay(500)
-        return if (x <= 1) x else fibonacci(x - 1) + fibonacci(x - 2)
-    }
-
-    tailrec fun fibonacci(n: Int, a: Int = 0, b: Int = 1): Int =
-        when (n) {
+     tailrec fun fibonacci(n: Int, a: Int = 0, b: Int = 1): Int {
+        Log.d("FIBONACCI", n.toString())
+        return when (n) {
             0 -> a
             1 -> b
             else -> fibonacci(n - 1, b, a + b)
         }
+    }
 
 }
