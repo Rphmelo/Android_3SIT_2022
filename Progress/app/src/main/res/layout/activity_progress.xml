@@ -10,7 +10,7 @@
         android:id="@+id/button_start_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/progress_button_label"
+        android:text="@string/start_button_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/spacing_md"
@@ -52,28 +52,5 @@
         android:layout_marginHorizontal="@dimen/spacing_md"
         app:layout_constraintTop_toBottomOf="@+id/label_percentage"
         />
-
-<!--    <TextView-->
-<!--        android:id="@+id/label_async"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/launch_progress_bar"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:layout_marginStart="@dimen/spacing_md"-->
-<!--        android:layout_marginTop="@dimen/spacing_xl"-->
-<!--        android:text="Async"-->
-<!--        style="@style/TextAppearance.AppCompat.Body2"-->
-<!--        />-->
-
-<!--    <com.google.android.material.progressindicator.LinearProgressIndicator-->
-<!--        android:id="@+id/async_progress_bar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:layout_marginTop="@dimen/spacing_md"-->
-<!--        android:layout_marginHorizontal="@dimen/spacing_md"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/label_async"-->
-<!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
