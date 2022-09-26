@@ -3,5 +3,4 @@
     <string name="progress_button_label">Progress</string>
     <string name="start_button_label">Iniciar</string>
     <string name="stop_button_label">Parar</string>
-    <string name="show_toast_label">Mostrar Toast</string>
 </resources>
