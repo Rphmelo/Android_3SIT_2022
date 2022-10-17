@@ -21,7 +21,9 @@ data class MarvelCharacterDataResultModel (
      val description: String?,
      @SerializedName("thumbnail")
      val thumbnail: MarvelCharacterDataResultThumbnailModel?,
-)
+) {
+     fun getThumbnailFullUrl(): String? = thumbnail?.run { "${path?.replace("http", "https")}.$extension"}
+}
 
 data class MarvelCharacterDataResultThumbnailModel(
      @SerializedName("path")

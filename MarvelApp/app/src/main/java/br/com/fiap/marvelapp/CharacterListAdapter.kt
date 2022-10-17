@@ -1,10 +1,15 @@
 package br.com.fiap.marvelapp
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.marvelapp.data.MarvelCharacterDataResultModel
 import br.com.fiap.marvelapp.databinding.ViewCharacterItemBinding
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
+import java.lang.Exception
 
 
 class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.CharacterItemViewHolder>() {
@@ -43,6 +48,25 @@ class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.Character
 
         fun bindView(character: MarvelCharacterDataResultModel) {
             view.characterNameValue.text = character.name
+
+            character.getThumbnailFullUrl()?.let {
+                Picasso.get().apply { isLoggingEnabled = true }
+                    .load(it)
+                    .into(object: Target {
+                        override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                            view.characterIcon.setImageBitmap(bitmap)
+                        }
+
+                        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+
+                        }
+
+                        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+
+                        }
+
+                    })
+            }
         }
     }
 }
