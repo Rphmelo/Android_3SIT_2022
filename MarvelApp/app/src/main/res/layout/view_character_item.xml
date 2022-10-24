@@ -15,25 +15,26 @@
         android:layout_marginVertical="@dimen/spacing_sm"
         >
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/character_icon"
+        <TextView
+            android:id="@+id/characterNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Nome:"
+            android:layout_marginStart="@dimen/spacing_sm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:srcCompat="@drawable/ic_launcher_background"
+            style="@style/TextAppearance.AppCompat.Body2"
             />
 
         <TextView
             android:id="@+id/characterNameValue"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Description"
             android:layout_marginStart="@dimen/spacing_sm"
-            app:layout_constraintStart_toEndOf="@+id/character_icon"
-            app:layout_constraintTop_toTopOf="@+id/character_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/character_icon"
+            app:layout_constraintStart_toEndOf="@+id/characterNameLabel"
+            app:layout_constraintTop_toTopOf="@+id/characterNameLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/characterNameLabel"
             style="@style/TextAppearance.AppCompat.Body2"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
