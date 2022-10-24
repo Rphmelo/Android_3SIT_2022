@@ -1,21 +1,18 @@
 package br.com.fiap.marvelapp
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.marvelapp.data.MarvelCharacterDataResultModel
 import br.com.fiap.marvelapp.databinding.ViewCharacterItemBinding
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
+import java.lang.Exception
+
 
 class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.CharacterItemViewHolder>() {
-
-    inner class CharacterItemViewHolder(
-        private val view: ViewCharacterItemBinding
-    ): RecyclerView.ViewHolder(view.root) {
-
-        fun bindView(character: MarvelCharacterDataResultModel) {
-            view.characterNameValue.text = character.name
-        }
-    }
 
     private val characterList: MutableList<MarvelCharacterDataResultModel> = mutableListOf()
 
@@ -23,8 +20,7 @@ class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.Character
         val binding = ViewCharacterItemBinding.bind(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.view_character_item,
-                parent,
-                false
+                parent, false
             )
         )
         return CharacterItemViewHolder(binding)
@@ -39,9 +35,38 @@ class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.Character
     }
 
     fun setData(list: List<MarvelCharacterDataResultModel>) {
-        characterList.clear()
-        characterList.addAll(list)
+        with(characterList) {
+            clear()
+            addAll(list)
+        }
         notifyDataSetChanged()
     }
 
+    inner class CharacterItemViewHolder(
+        private val view: ViewCharacterItemBinding
+    ) : RecyclerView.ViewHolder(view.root) {
+
+        fun bindView(character: MarvelCharacterDataResultModel) {
+            view.characterNameValue.text = character.name
+
+            character.getThumbnailFullUrl()?.let {
+                Picasso.get().apply { isLoggingEnabled = true }
+                    .load(it)
+                    .into(object: Target {
+                        override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                            view.characterIcon.setImageBitmap(bitmap)
+                        }
+
+                        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+
+                        }
+
+                        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+
+                        }
+
+                    })
+            }
+        }
+    }
 }

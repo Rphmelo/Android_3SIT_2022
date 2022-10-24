@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 object Api {
+
     private const val BASE_URL = "https://gateway.marvel.com:443"
 
     private val retrofit: Retrofit = Retrofit.Builder()
@@ -16,21 +17,20 @@ object Api {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val marvelService: MarvelService = retrofit.create(
-        MarvelService::class.java
-    )
+    private val marvelService: MarvelService by lazy {
+        retrofit.create(MarvelService::class.java)
+    }
 
     private val timestamp = Date().time.toString()
     private val hash = Utils.md5(timestamp + BuildConfig.MARVEL_PRIVATE_KEY + BuildConfig.MARVEL_API_KEY)
 
-    suspend fun listCharacters(): Response<MarvelCharacterModel> {
-        return withContext(Dispatchers.IO) {
+
+    suspend fun listCharacters(): Response<MarvelCharacterModel> =
+        withContext(Dispatchers.IO) {
             marvelService.listCharacters(
                 timestamp,
                 BuildConfig.MARVEL_API_KEY,
                 hash
             )
         }
-    }
-
 }

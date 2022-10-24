@@ -8,9 +8,8 @@ interface MarvelService {
 
     @GET("/v1/public/characters")
     suspend fun listCharacters(
-        @Query("ts") timestamp: String,
+        @Query("ts") ts: String,
         @Query("apikey") apiKey: String,
-        @Query("hash") hash: String
+        @Query("hash") hash: String,
     ): Response<MarvelCharacterModel>
-
 }
